@@ -18,3 +18,5 @@ urlpatterns = [
     path('payment/', views.PaymentView.as_view(), name='payment'),
     path('complete_payment/', views.CompletePaymentView.as_view(), name='complete-payment'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#hola 
