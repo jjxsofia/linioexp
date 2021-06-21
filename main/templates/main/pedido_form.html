@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<hr>
     <h3 class="title"> Checkout </h3>
+
+    <hr>
 
     <div class="block">
         <h5 class="subtitle"> Completa tus datos </h5>
@@ -13,9 +16,6 @@
     </div>
     <hr>
     <div class="content">
-        <ul>
-          <li><a href="{% url 'product-list' %}">Ver Lista de Productos</a></li>
-          <li><a href="{% url 'home' %}">Inicio</a></li>
-        </ul>
+      <a class="btn btn-outline-info" href="{% url 'product-list' %}">Lista completa de productos</a>
     </div>
 {% endblock %}

@@ -23,6 +23,8 @@ class UserForm(UserCreationForm):
         (NO_BINARIO, 'No Binario')
     ]
     genero = forms.ChoiceField(choices=GENERO_CHOICES)
+    #TELEFONO
+    telefono = forms.CharField(max_length=9)
 
     # Cliente attributes
     is_cliente = forms.BooleanField(required=False)
@@ -48,5 +50,6 @@ class UserForm(UserCreationForm):
         'is_colaborador',
         'reputacion',
         'cobertura_entrega',
+        'telefono'
         ]
     

@@ -1,3 +1,4 @@
+from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.contrib.auth.models import User  #Importar usuario de modelo ya pre hecho 
 
@@ -19,7 +20,9 @@ class Profile(models.Model):
         (NO_BINARIO, 'No Binario')
     ]
     genero = models.CharField(max_length=2, choices=GENERO_CHOICES)
-
+    #TELEFONO
+    telefono = models.CharField(max_length=9, null=True)
+    
     def __str__(self):
         return self.user.get_username()
 
@@ -120,3 +123,4 @@ class DetallePedido(models.Model):
 class ProductoImage(models.Model):
     product = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to="products", null=True, blank=True)
+

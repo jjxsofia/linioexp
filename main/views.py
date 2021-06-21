@@ -15,7 +15,7 @@ from .forms import *
 #Importamos las clases recien creadas
 from .models import *
 
-from django.db.models import F
+from django.db.models import F, Q 
 from random import randint
 from django.contrib import messages
 
@@ -89,7 +89,7 @@ class RegistrationView(FormView):
 
       return super().form_valid(form)
 
-class ProductListView(ListView):
+'''class ProductListView(ListView):
   model = Producto
   
   def get_queryset(self):
@@ -98,7 +98,30 @@ class ProductListView(ListView):
       object_list = Producto.objects.filter(nombre__icontains=query)
       return object_list
     else:
-      return Producto.objects.all()
+      return Producto.objects.all()'''
+
+def ProductListView(request):
+    
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    categoria_id = request.GET.get('categoria')
+
+    if categoria_id != None:        
+        productos = Producto.objects.filter(Q(categoria=categoria_id))
+
+    query = request.GET.get("q")
+    if query:
+        
+        productos = Producto.objects.filter(
+            Q(nombre__icontains=query) |
+            Q(descripcion__icontains=query)
+        ).distinct()
+
+    context = {
+        'productos': productos,
+        'categorias': categorias,                
+    }
+    return render(request, "main/producto_list.html", context)
 
 class ProductDetailView(DetailView):
   model = Producto
@@ -116,7 +139,7 @@ class AddToCartView(View):
     detalle_pedido, created = DetallePedido.objects.get_or_create(
       producto=producto,
       pedido=pedido,
-    )
+      )
 
     # Si el detalle de pedido es creado la cantidad es 1
     # Si no sumamos 1 a la cantidad actual
